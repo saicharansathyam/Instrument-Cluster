@@ -1,0 +1,24 @@
+{
+	"BUILD_DIR" : "/home/kijin-baek/ClusterUI_0805/build/Qt_5_15_13_Desktop-Debug/ClusterUI_0805_autogen",
+	"CMAKE_BINARY_DIR" : "/home/kijin-baek/ClusterUI_0805/build/Qt_5_15_13_Desktop-Debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/kijin-baek/ClusterUI_0805/build/Qt_5_15_13_Desktop-Debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/kijin-baek/ClusterUI_0805",
+	"CMAKE_SOURCE_DIR" : "/home/kijin-baek/ClusterUI_0805",
+	"GENERATOR" : "Unix Makefiles",
+	"INCLUDE_DIR" : "/home/kijin-baek/ClusterUI_0805/build/Qt_5_15_13_Desktop-Debug/ClusterUI_0805_autogen/include",
+	"INPUTS" : 
+	[
+		"/home/kijin-baek/ClusterUI_0805/main.qml",
+		"/home/kijin-baek/ClusterUI_0805/fonts/Orbitron-VariableFont_wght.ttf"
+	],
+	"LOCK_FILE" : "/home/kijin-baek/ClusterUI_0805/build/Qt_5_15_13_Desktop-Debug/CMakeFiles/ClusterUI_0805_autogen.dir/AutoRcc_qml_EWIEGA46WW_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "qml" ],
+	"OUTPUT_CHECKSUM" : "EWIEGA46WW",
+	"OUTPUT_NAME" : "qrc_qml.cpp",
+	"RCC_EXECUTABLE" : "/usr/lib/qt5/bin/rcc",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "/home/kijin-baek/ClusterUI_0805/build/Qt_5_15_13_Desktop-Debug/CMakeFiles/ClusterUI_0805_autogen.dir/AutoRcc_qml_EWIEGA46WW_Used.txt",
+	"SOURCE" : "/home/kijin-baek/ClusterUI_0805/qml.qrc",
+	"VERBOSITY" : 0
+}

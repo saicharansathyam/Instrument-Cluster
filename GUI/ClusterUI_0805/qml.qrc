@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>fonts/Orbitron-VariableFont_wght.ttf</file>
+    </qresource>
+</RCC>
