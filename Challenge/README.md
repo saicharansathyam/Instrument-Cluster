@@ -1,3 +1,4 @@
+```mermaid
 graph TD
     subgraph Gamepad Input
         A[Shawnpad Gamepad] --> B{User Input};
@@ -43,3 +44,4 @@ graph TD
     style L fill:#ffcc99,stroke:#333,stroke-width:2px
     style M fill:#f0f0f0,stroke:#333,stroke-width:1px
     style N fill:#f0f0f0,stroke:#333,stroke-width:1px
+```
