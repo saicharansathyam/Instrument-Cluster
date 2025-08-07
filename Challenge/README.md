@@ -6,7 +6,7 @@ graph TD
         B -- Right Joystick (Y) --> D[Throttle Input];
     end
 
-    subgraph Raspberry Pi (Python Script)
+    subgraph Raspberry Pi Python Script
         C --> E[Reads Gamepad Events (evdev)];
         D --> E;
         E --> F{Maps Input to Control Values};
@@ -45,3 +45,4 @@ graph TD
     style M fill:#f0f0f0,stroke:#333,stroke-width:1px
     style N fill:#f0f0f0,stroke:#333,stroke-width:1px
 ```
+
