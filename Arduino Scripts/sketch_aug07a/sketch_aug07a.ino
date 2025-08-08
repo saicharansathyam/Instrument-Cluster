@@ -149,7 +149,7 @@ void setup() {
   Serial.println("=== Real-Time Speed Sensor (Pin 3) CAN Sender ===");
 
   // CAN 초기화
-  if (CAN.begin(MCP_ANY, MCP_500KBPS, MCP_16MHZ) == CAN_OK) {
+  if (CAN.begin(MCP_ANY, CAN_500KBPS, MCP_16MHZ) == CAN_OK) {
     Serial.println("✓ CAN Ready");
     CAN.setMode(MCP_NORMAL);
   } else {
@@ -203,4 +203,3 @@ void loop() {
   Serial.println("---");
   delay(500); // 500ms 주기
 }
-
