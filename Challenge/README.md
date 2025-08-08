@@ -29,21 +29,22 @@ graph TD
     K --> M[Turns Wheels Left/Right]
     L --> N[Moves Car Forward/Backward]
 
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style B fill:#ccf,stroke:#333,stroke-width:2px
-    style C fill:#ccf,stroke:#333,stroke-width:2px
-    style D fill:#ccf,stroke:#333,stroke-width:2px
-    style E fill:#bbf,stroke:#333,stroke-width:2px
-    style F fill:#9cf,stroke:#333,stroke-width:2px
-    style G fill:#7cf,stroke:#333,stroke-width:2px
-    style H1 fill:#aaffaa,stroke:#333,stroke-width:2px
-    style H2 fill:#aaffaa,stroke:#333,stroke-width:2px
-    style I fill:#ccffcc,stroke:#333,stroke-width:2px
-    style J fill:#ccffcc,stroke:#333,stroke-width:2px
-    style K fill:#ffcc99,stroke:#333,stroke-width:2px
-    style L fill:#ffcc99,stroke:#333,stroke-width:2px
-    style M fill:#f0f0f0,stroke:#333,stroke-width:1px
-    style N fill:#f0f0f0,stroke:#333,stroke-width:1px
+    style A fill:#f9f,stroke:#333,stroke-width:2px,color:#000
+    style B fill:#ccf,stroke:#333,stroke-width:2px,color:#000
+    style C fill:#ccf,stroke:#333,stroke-width:2px,color:#000
+    style D fill:#ccf,stroke:#333,stroke-width:2px,color:#000
+    style E fill:#bbf,stroke:#333,stroke-width:2px,color:#000
+    style F fill:#9cf,stroke:#333,stroke-width:2px,color:#000
+    style G fill:#7cf,stroke:#333,stroke-width:2px,color:#000
+    style H1 fill:#aaffaa,stroke:#333,stroke-width:2px,color:#000
+    style H2 fill:#aaffaa,stroke:#333,stroke-width:2px,color:#000
+    style I fill:#ccffcc,stroke:#333,stroke-width:2px,color:#000
+    style J fill:#ccffcc,stroke:#333,stroke-width:2px,color:#000
+    style K fill:#ffcc99,stroke:#333,stroke-width:2px,color:#000
+    style L fill:#ffcc99,stroke:#333,stroke-width:2px,color:#000
+    style M fill:#f0f0f0,stroke:#333,stroke-width:1px,color:#000
+    style N fill:#f0f0f0,stroke:#333,stroke-width:1px,color:#000
 ```
+
 
 
