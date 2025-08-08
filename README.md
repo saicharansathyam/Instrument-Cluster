@@ -1,4 +1,4 @@
-# Embedded Vehicle Control System
+# Instrument Cluster Project
 
 ## System Overview
 
@@ -35,8 +35,10 @@ flowchart TD
     
     I[⚡ Speed Sensor ISR] -.-> D
     
-    style A fill:#ff6b6b
-    style I fill:#ffeb3b
+    style A fill:#ff6b6b,color:#000
+    style I fill:#ffeb3b,color:#000
+    style F fill:#ffcdd2,color:#000
+    style G fill:#ffcdd2,color:#000
 ```
 
 ---
@@ -65,9 +67,12 @@ flowchart TD
     C --> E
     D --> K
     
-    style A fill:#4ecdc4
-    style C fill:#81c784
-    style D fill:#81c784
+    style A fill:#4ecdc4,color:#000
+    style C fill:#81c784,color:#000
+    style D fill:#81c784,color:#000
+    style I fill:#e1f5fe,color:#000
+    style J fill:#e1f5fe,color:#000
+    style L fill:#fff9c4,color:#000
 ```
 
 ---
@@ -91,9 +96,11 @@ flowchart TD
     I --> J
     J --> D
     
-    style A fill:#45b7d1
-    style G fill:#66bb6a
-    style I fill:#ab47bc
+    style A fill:#45b7d1,color:#000
+    style G fill:#66bb6a,color:#000
+    style I fill:#ab47bc,color:#fff
+    style E fill:#ffeb3b,color:#000
+    style F fill:#ffc107,color:#000
 ```
 
 ---
@@ -138,8 +145,10 @@ graph TD
         C[CAN ID: 0x102<br/>Gear Data] --> D[Byte 0: Current Gear<br/>Byte 1: Gear Status<br/>Byte 2-3: Reserved<br/>Byte 4-7: Timestamp]
     end
     
-    style A fill:#ff9800
-    style C fill:#2196f3
+    style A fill:#ff9800,color:#000
+    style C fill:#2196f3,color:#fff
+    style B fill:#fff3e0,color:#000
+    style D fill:#e3f2fd,color:#000
 ```
 
 ---
@@ -184,10 +193,19 @@ graph TB
     D2 --> D1
     D3 --> D1
     
-    style A1 fill:#e1f5fe
-    style B1 fill:#f3e5f5
-    style C1 fill:#fff3e0
-    style D1 fill:#ffebee
+    style A1 fill:#e1f5fe,color:#000
+    style A2 fill:#e1f5fe,color:#000
+    style B1 fill:#f3e5f5,color:#000
+    style B2 fill:#f3e5f5,color:#000
+    style B3 fill:#f3e5f5,color:#000
+    style C1 fill:#fff3e0,color:#000
+    style C2 fill:#fff3e0,color:#000
+    style C3 fill:#fff3e0,color:#000
+    style D1 fill:#ffebee,color:#000
+    style D2 fill:#ffebee,color:#000
+    style D3 fill:#ffebee,color:#000
+    style D4 fill:#ffebee,color:#000
+    style D5 fill:#ffebee,color:#000
 ```
 
 ---
