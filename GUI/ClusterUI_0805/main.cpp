@@ -1,5 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include "PiRacerBridge.h"
 
 int main(int argc, char *argv[])
 {
@@ -9,6 +11,12 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
+
+    PiRacerBridge bridge;
+    bridge.initDBus();  // ★ D-Bus 연결 초기화
+
+    engine.rootContext()->setContextProperty("bridge", &bridge);
+
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(
         &engine,
@@ -23,3 +31,5 @@ int main(int argc, char *argv[])
 
     return app.exec();
 }
+
+

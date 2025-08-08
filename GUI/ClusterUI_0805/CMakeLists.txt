@@ -9,43 +9,39 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Quick)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick)
+# ---- Qt 찾기: Core, Quick, DBus 추가 ----
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Quick DBus)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick DBus)
 
+# ---- 소스 목록 (모든 경우 공통) ----
 set(PROJECT_SOURCES
-        main.cpp
-        qml.qrc
+    main.cpp
+    PiRacerBridge.cpp
+    PiRacerBridge.h
+    qml.qrc
 )
 
+# ---- 실행파일 생성 ----
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(ClusterUI_0805
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
     )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET ClusterUI_0805 APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
 else()
-    if(ANDROID)
-        add_library(ClusterUI_0805 SHARED
-            ${PROJECT_SOURCES}
-        )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-    else()
-        add_executable(ClusterUI_0805
-          ${PROJECT_SOURCES}
-        )
-    endif()
+    add_executable(ClusterUI_0805
+        ${PROJECT_SOURCES}
+    )
 endif()
 
+# ---- 링크 (DBus 포함) ----
 target_link_libraries(ClusterUI_0805
-  PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick)
+    PRIVATE
+        Qt${QT_VERSION_MAJOR}::Core
+        Qt${QT_VERSION_MAJOR}::Quick
+        Qt${QT_VERSION_MAJOR}::DBus   # ★ 중요
+)
 
-# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
-# If you are developing for iOS or macOS you should consider setting an
-# explicit, fixed bundle identifier manually though.
+# (선택) mac/iOS 번들 세팅 그대로 유지
 if(${QT_VERSION} VERSION_LESS 6.1.0)
   set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.ClusterUI_0805)
 endif()

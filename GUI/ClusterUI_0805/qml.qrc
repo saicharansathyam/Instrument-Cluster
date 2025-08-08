@@ -5,5 +5,6 @@
         <file>images/background.png</file>
         <file>images/needles.png</file>
         <file>images/battery_icon.png</file>
+        <file>images/seame.png</file>
     </qresource>
 </RCC>
