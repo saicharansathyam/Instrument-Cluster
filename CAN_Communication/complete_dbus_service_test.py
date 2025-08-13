@@ -41,9 +41,9 @@ class CompleteDashboardService(dbus.service.Object):
         
         # Connect to CAN
         try:
-            self.can_bus = can.interface.Bus(channel='can0', bustype='socketcan')
+            self.can_bus = can.interface.Bus(channel='can1', bustype='socketcan')
             self.connected = True
-            print("✓ Connected to can0")
+            print("✓ Connected to can1")
         except Exception as e:
             print(f"✗ CAN connection failed: {e}")
             return
