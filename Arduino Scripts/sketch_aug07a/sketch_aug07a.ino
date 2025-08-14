@@ -1,154 +1,89 @@
 #include <SPI.h>
 #include <mcp_can.h>
 
-// -------------------- CAN 설정 --------------------
-const int SPI_CS_PIN = 10;
-MCP_CAN CAN(SPI_CS_PIN);
+#define ENCODER_PIN 3
+#define CS_PIN 10
 
-// CAN Message IDs
-#define SPEED_MSG_ID    0x100
-#define GEAR_MSG_ID     0x102
+MCP_CAN CAN0(CS_PIN);
 
-// -------------------- 속도 센서 설정 --------------------
-#define SPEED_SENSOR_PIN 3
-#define WHEEL_CIRCUMFERENCE_CM 20.0
-#define PULSES_PER_REVOLUTION 20
+// If using CHANGE (rising+falling), use 40. If FALLING only, use 20.
+const int pulsesPerTurn = 40;                 // encoder 20 slots × 2 edges
+const int wheel_diameter_mm = 64;            // mm
+const float wheel_circ_cm = 3.1415926f * (wheel_diameter_mm / 10.0f); // cm
+const float cm_per_pulse = wheel_circ_cm / pulsesPerTurn;
 
-// -------------------- 속도 계산 변수 --------------------
-volatile unsigned long pulse_count = 0;
-unsigned long last_speed_calculation = 0;
-unsigned long speed_calculation_interval = 1000; // 1초마다 계산
-float current_speed_cms = 0.0;
+volatile unsigned long pulseCount = 0;
+volatile unsigned long lastEdgeUs = 0;
+const unsigned long minPeriodUs = 700;       // ignore bounces faster than this
 
-char current_gear = 'P';
+// display/sender state
+float speed_cms = 0.0f;
+unsigned long lastCalcMs = 0;
 
-// -------------------- ISR --------------------
-void speedPulse() {
-  pulse_count++;
-}
-
-// -------------------- 속도 계산(cm/s) --------------------
-float calculateSpeed() {
-  unsigned long current_time = millis();
-  unsigned long time_elapsed = current_time - last_speed_calculation;
-
-  if (time_elapsed >= speed_calculation_interval) {
-    noInterrupts();
-    unsigned long pulses = pulse_count;
-    pulse_count = 0;
-    interrupts();
-
-    float distance_cm = (float(pulses) / PULSES_PER_REVOLUTION) * WHEEL_CIRCUMFERENCE_CM;
-    float time_seconds = time_elapsed / 1000.0;
-
-    if (time_seconds > 0.0f) {
-      current_speed_cms = distance_cm / time_seconds;
-    } else {
-      current_speed_cms = 0.0f;
-    }
-
-    last_speed_calculation = current_time;
-
-    Serial.print("Pulses: "); Serial.print(pulses);
-    Serial.print(", Distance: "); Serial.print(distance_cm, 1);
-    Serial.print(" cm, Speed: "); Serial.print(current_speed_cms, 1);
-    Serial.println(" cm/s");
-
-    Serial.print("Current pin ");
-    Serial.print(SPEED_SENSOR_PIN);
-    Serial.print(" state: ");
-    Serial.println(digitalRead(SPEED_SENSOR_PIN));
-  }
-
-  return current_speed_cms;
-}
-
-// -------------------- 속도 기반 자동 기어 --------------------
-void updateGearBasedOnSpeed() {
-  // New gear thresholds (max speed: 172.7 cm/s)
-  if (current_speed_cms < 5.0) {
-    current_gear = 'P';
-  } else if (current_speed_cms < 60.0) {
-    current_gear = '1';
-  } else if (current_speed_cms < 120.0) {
-    current_gear = '2';
-  } else if (current_speed_cms < 172.7) {
-    current_gear = '3';
-  } else {
-    current_gear = '4';
+void IRAM_ATTR_dummy() {} // noop for compatibility on ESP; ignored on AVR
+void countPulses() {
+  unsigned long now = micros();
+  if (now - lastEdgeUs >= minPeriodUs) {
+    pulseCount++;
+    lastEdgeUs = now;
   }
 }
 
-// -------------------- CAN 송신: 속도(cm/s × 10) --------------------
-void sendSpeedData(float speed_cms) {
-  int speed_int = (int)(speed_cms * 10.0f);
-
-  byte data[8] = {0};
-  data[0] = highByte(speed_int);
-  data[1] = lowByte(speed_int);
-
-  byte result = CAN.sendMsgBuf(SPEED_MSG_ID, 0, 8, data);
-
-  Serial.print("Real Speed: ");
-  Serial.print(speed_cms, 1);
-  Serial.print(" cm/s - ");
-  Serial.println(result == CAN_OK ? "✓" : "✗");
-}
-
-// -------------------- CAN 송신: 기어 --------------------
-void sendGearData(char gear) {
-  byte data[8] = {0};
-  data[0] = (byte)gear;
-
-  byte result = CAN.sendMsgBuf(GEAR_MSG_ID, 0, 8, data);
-
-  Serial.print("Auto Gear: ");
-  Serial.print(gear);
-  Serial.print(" - ");
-  Serial.println(result == CAN_OK ? "✓" : "✗");
-}
-
-// -------------------- 초기화 --------------------
 void setup() {
   Serial.begin(115200);
-  Serial.println("=== Real-Time Speed Sensor (Pin 3) CAN Sender ===");
+  pinMode(ENCODER_PIN, INPUT);
+  attachInterrupt(digitalPinToInterrupt(ENCODER_PIN), countPulses, CHANGE);
 
-  if (CAN.begin(MCP_ANY, CAN_500KBPS, MCP_16MHZ) == CAN_OK) {
-    Serial.println("✓ CAN Ready");
-    CAN.setMode(MCP_NORMAL);
+  Serial.print("Initializing MCP2515... ");
+  if (CAN0.begin(MCP_ANY, CAN_500KBPS, MCP_16MHZ) == CAN_OK) {
+    Serial.println("OK");
   } else {
-    Serial.println("✗ CAN Failed");
+    Serial.println("FAIL");
     while (1);
   }
-
-  pinMode(SPEED_SENSOR_PIN, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(SPEED_SENSOR_PIN), speedPulse, FALLING);
-
-  Serial.print("✓ Speed sensor initialized on pin ");
-  Serial.println(SPEED_SENSOR_PIN);
-  Serial.print("Wheel circumference: ");
-  Serial.print(WHEEL_CIRCUMFERENCE_CM);
-  Serial.println(" cm");
-  Serial.println("Output: Speed in cm/s");
-
-  Serial.println("Testing interrupt pin...");
-  for (int i = 0; i < 5; i++) {
-    Serial.print("Pin state: ");
-    Serial.println(digitalRead(SPEED_SENSOR_PIN));
-    delay(500);
-  }
+  CAN0.setMode(MCP_NORMAL);
+  Serial.println("Ready.");
 }
 
-// -------------------- 메인 루프 --------------------
+void sendSpeedCms10(float cms) {
+  int16_t raw = (int16_t)(cms * 10.0f + (cms >= 0 ? 0.5f : -0.5f)); // round
+  byte data[2] = { (byte)highByte(raw), (byte)lowByte(raw) };
+  byte ok = CAN0.sendMsgBuf(0x100, 0, 2, data); // DLC = 2
+  // Optional debug:
+  // Serial.print("cm/s: "); Serial.print(cms,1);
+  // Serial.println(ok==CAN_OK ? " ✓" : " ✗");
+}
+
 void loop() {
-  calculateSpeed();
-  updateGearBasedOnSpeed();
+  unsigned long nowMs = millis();
 
-  sendSpeedData(current_speed_cms);
-  delay(50);
+  // Recalculate every 50 ms (20 Hz)
+  if (nowMs - lastCalcMs >= 50) {
+    unsigned long pulses;
+    // atomic snapshot and reset
+    noInterrupts();
+    pulses = pulseCount;
+    pulseCount = 0;
+    interrupts();
 
-  sendGearData(current_gear);
+    float dt = (nowMs - lastCalcMs) / 1000.0f; // seconds
+    lastCalcMs = nowMs;
 
-  Serial.println("---");
-  delay(500);
+    float inst_cms = (pulses * cm_per_pulse) / dt;
+
+    // EMA smoothing to keep the needle civilized
+    const float alpha = 0.30f;  // higher = snappier, lower = smoother
+    speed_cms += alpha * (inst_cms - speed_cms);
+
+    // If no pulses for a while, decay gracefully
+    if ((millis() - (lastEdgeUs / 1000UL)) > 300) {
+      speed_cms *= 0.96f;
+      if ((millis() - (lastEdgeUs / 1000UL)) > 1200) speed_cms = 0.0f;
+    }
+
+    sendSpeedCms10(speed_cms);
+  }
+
+  // Optional: send gear on 0x102 based on speed thresholds,
+  // mirroring your other sketch (not shown here to keep parity).
 }
