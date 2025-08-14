@@ -1,0 +1,5 @@
+python-can
+dbus-python
+PyGObject
+adafruit-circuitpython-ina219
+pygame
