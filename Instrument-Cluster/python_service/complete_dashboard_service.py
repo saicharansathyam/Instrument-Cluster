@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
-import struct
+"""
+PiRacer dashboard D-Bus service:
+- Reads speed over CAN (0x100: cm/s * 10)
+- Smooths speed with an α–β filter (simple Kalman-like)
+- Reads battery % from INA219
+- Exposes values via D-Bus + signals
+- Allows setting gear/turn signals via D-Bus
+"""
+
 import can
 import dbus
 import dbus.service
@@ -8,30 +16,52 @@ from gi.repository import GLib
 import threading
 import time
 
+# ---- INA219 (I2C) ----
 import board
 import busio
 from adafruit_ina219 import INA219
 
+# ==================== Tunables ====================
+# α–β filter: higher alpha/beta = snappier (less smoothing)
+ALPHA = 0.40   # measurement weight (0..1). 0.40 is a good starting point
+BETA  = 0.07   # acceleration correction per second
+DT    = 0.05   # assumed sample period (s) ~20 Hz incoming messages
+
+# Battery chemistry (3S Li-ion)
 MIN_VOLTAGE = 9.0
 MAX_VOLTAGE = 12.6
 
 IFACE = 'com.piracer.dashboard'
-OBJ = '/com/piracer/dashboard'
+OBJ   = '/com/piracer/dashboard'
 
+# ==================== α–β filter ====================
 class ABFilter:
-    def __init__(self, alpha=0.4, beta=0.05, dt=0.05):
-        self.v = 0.0
-        self.a = 0.0
+    """
+    Simple α–β filter for 1D kinematics (position/velocity).
+    We apply it on speed directly by treating "position" as speed
+    and "velocity" as acceleration (works well for smoothing speed).
+    """
+    def __init__(self, alpha=ALPHA, beta=BETA, dt=DT):
+        self.v = 0.0  # filtered speed (cm/s)
+        self.a = 0.0  # estimated accel (cm/s^2)
         self.dt = dt
         self.alpha = alpha
-        self.beta = beta
+        self.beta  = beta
+
     def update(self, meas_v):
+        # Predict
         v_pred = self.v + self.a * self.dt
-        r = meas_v - v_pred
+        # Residual (innovation)
+        r = (meas_v - v_pred)
+        # Correct
         self.v = v_pred + self.alpha * r
-        self.a = self.a + (self.beta / self.dt) * r
+        self.a = self.a   + (self.beta / self.dt) * r
+        # Never negative speed
+        if self.v < 0.0:
+            self.v = 0.0
         return self.v
 
+# ==================== Service ====================
 class CompleteDashboardService(dbus.service.Object):
     def __init__(self):
         dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
@@ -42,13 +72,17 @@ class CompleteDashboardService(dbus.service.Object):
         )
         super().__init__(bus_name, OBJ)
 
-        self.current_speed = 0.0
-        self.battery_level = 0.0
-        self.current_gear  = 'P'      # default
+        # State
+        self.current_speed = 0.0      # cm/s (filtered)
+        self.battery_level = 0.0      # %
+        self.current_gear  = 'P'
         self.turn_mode     = 'off'
         self.connected     = False
-        self._speed_filt   = ABFilter(alpha=0.4, beta=0.07, dt=0.05)
 
+        # α–β filter instance
+        self._speed_filt = ABFilter(alpha=ALPHA, beta=BETA, dt=DT)
+
+        # CAN
         try:
             self.can_bus = can.interface.Bus(channel='can0', bustype='socketcan')
             self.connected = True
@@ -57,20 +91,27 @@ class CompleteDashboardService(dbus.service.Object):
             print(f"CAN connection failed: {e}")
             return
 
-        self.i2c_bus = busio.I2C(board.SCL, board.SDA)
-        self.ina219 = INA219(self.i2c_bus, 0x41)
+        # INA219
+        try:
+            self.i2c_bus = busio.I2C(board.SCL, board.SDA)
+            self.ina219 = INA219(self.i2c_bus, 0x41)
+            print("✓ INA219 ready (0x41)")
+        except Exception as e:
+            print(f"INA219 init failed: {e}")
+            self.ina219 = None
 
+        # Threads
         threading.Thread(target=self.read_can_data, daemon=True).start()
         threading.Thread(target=self.poll_battery, daemon=True).start()
 
-    # ---------- Methods ----------
+    # ---------- D-Bus Methods ----------
     @dbus.service.method(IFACE, out_signature='d')
     def GetSpeed(self):
         return float(self.current_speed)
 
     @dbus.service.method(IFACE, out_signature='d')
     def GetBatteryLevel(self):
-        return float(self.read_battery_percent())
+        return float(self.battery_level)
 
     @dbus.service.method(IFACE, out_signature='s')
     def GetGear(self):
@@ -80,7 +121,7 @@ class CompleteDashboardService(dbus.service.Object):
     def SetGear(self, gear):
         """Set gear via D-Bus: 'P','R','N','D'."""
         gear = str(gear).upper()
-        if gear not in ('P', 'R', 'N', 'D'):
+        if gear not in ('P','R','N','D'):
             raise dbus.DBusException('Invalid gear (use P/R/N/D)')
         if gear != self.current_gear:
             print(f"[Dash] Gear -> {gear}")
@@ -88,7 +129,7 @@ class CompleteDashboardService(dbus.service.Object):
 
     @dbus.service.method(IFACE, in_signature='s', out_signature='')
     def SetTurnSignal(self, mode):
-        if mode not in ('off', 'left', 'right', 'hazard'):
+        if mode not in ('off','left','right','hazard'):
             raise dbus.DBusException('Invalid turn signal mode')
         if mode != self.turn_mode:
             self.turn_mode = mode
@@ -99,7 +140,7 @@ class CompleteDashboardService(dbus.service.Object):
     def GetTurnSignal(self):
         return str(self.turn_mode)
 
-    # ---------- Signals ----------
+    # ---------- D-Bus Signals ----------
     @dbus.service.signal(IFACE, signature='d')
     def SpeedChanged(self, new_speed): pass
 
@@ -114,13 +155,13 @@ class CompleteDashboardService(dbus.service.Object):
 
     # ---------- Emit helpers ----------
     def _emit_speed(self, v_cms):
-        self.current_speed = v_cms
-        self.SpeedChanged(v_cms)
+        self.current_speed = max(0.0, v_cms)
+        self.SpeedChanged(self.current_speed)
         return False
 
     def _emit_batt(self, v_percent):
-        self.battery_level = v_percent
-        self.BatteryChanged(v_percent)
+        self.battery_level = max(0.0, min(100.0, v_percent))
+        self.BatteryChanged(self.battery_level)
         return False
 
     def _emit_gear(self, g):
@@ -130,6 +171,8 @@ class CompleteDashboardService(dbus.service.Object):
 
     # ---------- Battery ----------
     def read_battery_percent(self):
+        if not self.ina219:
+            return 0.0
         try:
             bus_voltage = self.ina219.bus_voltage
             percent = (bus_voltage - MIN_VOLTAGE) / (MAX_VOLTAGE - MIN_VOLTAGE) * 100.0
@@ -141,12 +184,14 @@ class CompleteDashboardService(dbus.service.Object):
     def poll_battery(self):
         while True:
             batt = self.read_battery_percent()
+            # emit if changed by >0.1%
             if abs(self.battery_level - batt) > 0.1:
                 GLib.idle_add(self._emit_batt, batt)
             time.sleep(1)
 
     # ---------- CAN handling ----------
     def read_can_data(self):
+        print("Listening: CAN 0x100 (speed), 0x102 (gear)")
         while True:
             try:
                 message = self.can_bus.recv(timeout=1.0)
@@ -161,7 +206,7 @@ class CompleteDashboardService(dbus.service.Object):
             msg_id = message.arbitration_id
             data = message.data
 
-            # Speed: 0x100, unsigned int16 big-endian, /10.0 = cm/s
+            # Speed: 0x100, unsigned int16 BE, /10.0 = cm/s
             if msg_id == 0x100 and len(data) >= 2:
                 speed_raw = (data[0] << 8) | data[1]
                 meas_cms = speed_raw / 10.0
@@ -169,7 +214,7 @@ class CompleteDashboardService(dbus.service.Object):
                 if abs(self.current_speed - filt_cms) > 0.1:
                     GLib.idle_add(self._emit_speed, float(filt_cms))
 
-            # Gear via CAN (optional): 0x102, 1 byte ASCII
+            # Optional gear via CAN: 0x102, 1 byte ASCII
             elif msg_id == 0x102 and len(data) >= 1:
                 gear_char = chr(data[0]) if data[0] != 0 else 'P'
                 if self.current_gear != gear_char:
@@ -178,6 +223,7 @@ class CompleteDashboardService(dbus.service.Object):
         except Exception as e:
             print(f"CAN message processing error: {e}")
 
+# ==================== Main ====================
 if __name__ == '__main__':
     try:
         service = CompleteDashboardService()

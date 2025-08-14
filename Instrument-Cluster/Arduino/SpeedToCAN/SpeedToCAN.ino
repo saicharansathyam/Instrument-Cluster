@@ -16,7 +16,6 @@ volatile unsigned long pulseCount = 0;
 volatile unsigned long lastEdgeUs = 0;
 const unsigned long minPeriodUs = 300;        // ignore edges faster than this
 
-float speed_cms = 0.0f;
 unsigned long lastCalcMs = 0;
 
 void countPulses() {
@@ -64,19 +63,20 @@ void loop() {
     float dt = (nowMs - lastCalcMs) / 1000.0f;
     lastCalcMs = nowMs;
 
+    // Instantaneous speed from pulses in this window
     float inst_cms = (pulses * cm_per_pulse) / dt;
-    if (inst_cms > 300.0f) inst_cms = 300.0f; // spike guard
 
-    const float alpha = 0.30f;
-    speed_cms += alpha * (inst_cms - speed_cms);
+    // Guard against wild spikes
+    if (inst_cms > 300.0f) inst_cms = 300.0f;
 
+    // If no edges for a while, force to zero (no gradual decay here;
+    // smoothing will be handled in Python α–β filter)
     unsigned long lastEdgeMs = lastEdgeUs / 1000UL;
-    unsigned long since = (millis() - lastEdgeMs);
-    if (since > 300) {
-      speed_cms *= 0.96f;
-      if (since > 1200) speed_cms = 0.0f;
+    if ((millis() - lastEdgeMs) > 1200) {
+      inst_cms = 0.0f;
     }
 
-    sendSpeedCms10(speed_cms);
+    // Send the instantaneous value (Python will smooth)
+    sendSpeedCms10(inst_cms);
   }
 }
