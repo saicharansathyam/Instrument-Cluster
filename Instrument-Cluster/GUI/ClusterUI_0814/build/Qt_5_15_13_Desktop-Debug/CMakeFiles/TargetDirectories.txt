@@ -1,5 +1,0 @@
-/home/kijin-baek/Desktop/Instrument-Cluster/Instrument-Cluster/GUI/ClusterUI_0814/build/Qt_5_15_13_Desktop-Debug/CMakeFiles/ClusterUI_0814.dir
-/home/kijin-baek/Desktop/Instrument-Cluster/Instrument-Cluster/GUI/ClusterUI_0814/build/Qt_5_15_13_Desktop-Debug/CMakeFiles/edit_cache.dir
-/home/kijin-baek/Desktop/Instrument-Cluster/Instrument-Cluster/GUI/ClusterUI_0814/build/Qt_5_15_13_Desktop-Debug/CMakeFiles/rebuild_cache.dir
-/home/kijin-baek/Desktop/Instrument-Cluster/Instrument-Cluster/GUI/ClusterUI_0814/build/Qt_5_15_13_Desktop-Debug/CMakeFiles/ClusterUI_0814_autogen_timestamp_deps.dir
-/home/kijin-baek/Desktop/Instrument-Cluster/Instrument-Cluster/GUI/ClusterUI_0814/build/Qt_5_15_13_Desktop-Debug/CMakeFiles/ClusterUI_0814_autogen.dir
