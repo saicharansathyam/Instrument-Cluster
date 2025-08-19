@@ -6,5 +6,5 @@ CXX_DEFINES = -DQT_CORE_LIB -DQT_DBUS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_
 
 CXX_INCLUDES = -I/home/team3/Desktop/Instrument-Cluster/GUI/ClusterUI_0814/build/ClusterUI_0814_autogen/include -isystem /usr/include/aarch64-linux-gnu/qt5 -isystem /usr/include/aarch64-linux-gnu/qt5/QtCore -isystem /usr/lib/aarch64-linux-gnu/qt5/mkspecs/linux-g++ -isystem /usr/include/aarch64-linux-gnu/qt5/QtGui -isystem /usr/include/aarch64-linux-gnu/qt5/QtQml -isystem /usr/include/aarch64-linux-gnu/qt5/QtNetwork -isystem /usr/include/aarch64-linux-gnu/qt5/QtQuick -isystem /usr/include/aarch64-linux-gnu/qt5/QtQmlModels -isystem /usr/include/aarch64-linux-gnu/qt5/QtDBus
 
-CXX_FLAGS = -fPIC -std=gnu++17
+CXX_FLAGS = -O3 -DNDEBUG -fPIC -std=gnu++17
 
