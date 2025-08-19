@@ -17,6 +17,7 @@ volatile unsigned long lastEdgeUs = 0;
 const unsigned long minPeriodUs = 300;        // ignore edges faster than this
 
 unsigned long lastCalcMs = 0;
+unsigned long lastDebugMs = 0;
 
 void countPulses() {
   unsigned long now = micros();
@@ -39,14 +40,31 @@ void setup() {
     while (1);
   }
   CAN0.setMode(MCP_NORMAL);
+  
+  // Print calibration info
   Serial.println("Ready.");
+  Serial.print("Wheel circumference: "); Serial.print(wheel_circ_cm); Serial.println(" cm");
+  Serial.print("CM per pulse: "); Serial.println(cm_per_pulse, 4);
+  Serial.print("Min period filter: "); Serial.print(minPeriodUs); Serial.println(" us");
+  Serial.println("Format: [Pulses | Raw_Speed | TX_Raw_Int | CAN_Bytes]");
 }
 
 void sendSpeedCms10(float cms) {
   if (cms < 0) cms = 0;
   if (cms > 1000.0f) cms = 1000.0f;
-  uint16_t raw = (uint16_t)(cms * 10.0f + 0.5f);
+  
+  uint16_t raw = (uint16_t)(cms + 0.5f);
   byte data[2] = { (byte)(raw >> 8), (byte)(raw & 0xFF) }; // big-endian
+  
+  // DEBUG: Print CAN transmission details for significant speeds
+  if (cms > 30.0f) {
+    Serial.print("TX: "); Serial.print(cms, 1); 
+    Serial.print(" cms → raw="); Serial.print(raw);
+    Serial.print(" → bytes=["); 
+    Serial.print(data[0], HEX); Serial.print(",");
+    Serial.print(data[1], HEX); Serial.println("]");
+  }
+  
   CAN0.sendMsgBuf(0x100, 0, 2, data);
 }
 
@@ -64,19 +82,30 @@ void loop() {
     lastCalcMs = nowMs;
 
     // Instantaneous speed from pulses in this window
-    float inst_cms = (pulses * cm_per_pulse) / dt;
+    float raw_cms = (pulses * cm_per_pulse) / dt;
+    float inst_cms = raw_cms;
 
     // Guard against wild spikes
     if (inst_cms > 300.0f) inst_cms = 300.0f;
 
-    // If no edges for a while, force to zero (no gradual decay here;
-    // smoothing will be handled in Python α–β filter)
+    // Check if no edges for a while
     unsigned long lastEdgeMs = lastEdgeUs / 1000UL;
-    if ((millis() - lastEdgeMs) > 1200) {
+    unsigned long edgeAge = millis() - lastEdgeMs;
+    
+    if (edgeAge > 1200) {
       inst_cms = 0.0f;
     }
 
-    // Send the instantaneous value (Python will smooth)
+    // Send the speed via CAN
     sendSpeedCms10(inst_cms);
+
+    // Debug output for encoder data
+    if ((nowMs - lastDebugMs >= 200) && (pulses > 0 || inst_cms > 5.0)) {
+      Serial.print("ENC: ["); Serial.print(pulses); 
+      Serial.print(" | "); Serial.print(raw_cms, 1);
+      Serial.print(" | dt="); Serial.print(dt * 1000, 0); 
+      Serial.println("ms]");
+      lastDebugMs = nowMs;
+    }
   }
 }

@@ -78,7 +78,7 @@ ClusterUI_0814_autogen/EWIEGA46WW/qrc_qml.cpp: /home/team3/Desktop/Instrument-Cl
 ClusterUI_0814_autogen/EWIEGA46WW/qrc_qml.cpp: /home/team3/Desktop/Instrument-Cluster/GUI/ClusterUI_0814/fonts/Orbitron-VariableFont_wght.ttf
 ClusterUI_0814_autogen/EWIEGA46WW/qrc_qml.cpp: /usr/lib/qt5/bin/rcc
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/team3/Desktop/Instrument-Cluster/GUI/ClusterUI_0814/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic RCC for qml.qrc"
-	/usr/bin/cmake -E cmake_autorcc /home/team3/Desktop/Instrument-Cluster/GUI/ClusterUI_0814/build/CMakeFiles/ClusterUI_0814_autogen.dir/AutoRcc_qml_EWIEGA46WW_Info.json 
+	/usr/bin/cmake -E cmake_autorcc /home/team3/Desktop/Instrument-Cluster/GUI/ClusterUI_0814/build/CMakeFiles/ClusterUI_0814_autogen.dir/AutoRcc_qml_EWIEGA46WW_Info.json Release
 
 CMakeFiles/ClusterUI_0814.dir/ClusterUI_0814_autogen/mocs_compilation.cpp.o: CMakeFiles/ClusterUI_0814.dir/flags.make
 CMakeFiles/ClusterUI_0814.dir/ClusterUI_0814_autogen/mocs_compilation.cpp.o: ClusterUI_0814_autogen/mocs_compilation.cpp

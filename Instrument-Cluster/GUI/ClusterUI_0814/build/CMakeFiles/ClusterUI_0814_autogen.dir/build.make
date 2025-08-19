@@ -68,7 +68,7 @@ include CMakeFiles/ClusterUI_0814_autogen.dir/progress.make
 
 CMakeFiles/ClusterUI_0814_autogen:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/team3/Desktop/Instrument-Cluster/GUI/ClusterUI_0814/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target ClusterUI_0814"
-	/usr/bin/cmake -E cmake_autogen /home/team3/Desktop/Instrument-Cluster/GUI/ClusterUI_0814/build/CMakeFiles/ClusterUI_0814_autogen.dir/AutogenInfo.json ""
+	/usr/bin/cmake -E cmake_autogen /home/team3/Desktop/Instrument-Cluster/GUI/ClusterUI_0814/build/CMakeFiles/ClusterUI_0814_autogen.dir/AutogenInfo.json Release
 
 ClusterUI_0814_autogen: CMakeFiles/ClusterUI_0814_autogen
 ClusterUI_0814_autogen: CMakeFiles/ClusterUI_0814_autogen.dir/build.make
