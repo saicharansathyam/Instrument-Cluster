@@ -1,0 +1,20 @@
+<RCC>
+  <qresource prefix="/">
+    <file>main.qml</file>
+    <file>images/background.png</file>
+    <file>images/battery_icon.png</file>
+    <file>images/needles.png</file>
+    <file>images/left_indicator.png</file>
+    <file>images/right_indicator.png</file>
+    <file>fonts/Orbitron-VariableFont_wght.ttf</file>
+  </qresource>
+</RCC>
+
+
+
+
+
+
+
+
+
