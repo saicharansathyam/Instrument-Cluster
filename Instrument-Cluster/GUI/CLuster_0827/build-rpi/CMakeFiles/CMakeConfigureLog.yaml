@@ -1,0 +1,271 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-3.28/Modules/CMakeDetermineSystem.cmake:228 (message)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      The target system is: Linux -  - aarch64
+      The host system is: Linux - 6.14.0-28-generic - x86_64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake-3.28/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /usr/bin/aarch64-linux-gnu-g++ 
+      Build flags: -mcpu=cortex-a72;-mcpu=cortex-a72
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+      
+      The CXX compiler identification is GNU, found in:
+        /home/seame/Desktop/SEAME projects/Instrument-Cluster/Instrument-Cluster/GUI/CLuster_0827/build-rpi/CMakeFiles/3.28.3/CompilerIdCXX/a.out
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/usr/share/cmake-3.28/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/home/seame/Desktop/SEAME projects/Instrument-Cluster/Instrument-Cluster/GUI/CLuster_0827/build-rpi/CMakeFiles/CMakeScratch/TryCompile-7UHGiW"
+      binary: "/home/seame/Desktop/SEAME projects/Instrument-Cluster/Instrument-Cluster/GUI/CLuster_0827/build-rpi/CMakeFiles/CMakeScratch/TryCompile-7UHGiW"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: " -mcpu=cortex-a72 -mcpu=cortex-a72"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_SYSROOT: "/home/seame/rpi-sysroot"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/home/seame/Desktop/SEAME projects/Instrument-Cluster/Instrument-Cluster/GUI/CLuster_0827/build-rpi/CMakeFiles/CMakeScratch/TryCompile-7UHGiW'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_08c14/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_08c14.dir/build.make CMakeFiles/cmTC_08c14.dir/build
+        gmake[1]: Entering directory '/home/seame/Desktop/SEAME projects/Instrument-Cluster/Instrument-Cluster/GUI/CLuster_0827/build-rpi/CMakeFiles/CMakeScratch/TryCompile-7UHGiW'
+        Building CXX object CMakeFiles/cmTC_08c14.dir/CMakeCXXCompilerABI.cpp.o
+        /usr/bin/aarch64-linux-gnu-g++ --sysroot=/home/seame/rpi-sysroot   -mcpu=cortex-a72 -mcpu=cortex-a72    -v -o CMakeFiles/cmTC_08c14.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/aarch64-linux-gnu-g++
+        Target: aarch64-linux-gnu
+        Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c,ada,c++,go,d,fortran,objc,obj-c++,m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-libquadmath --disable-libquadmath-support --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --without-target-system-zlib --enable-multiarch --enable-fix-cortex-a53-843419 --disable-werror --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=aarch64-linux-gnu --program-prefix=aarch64-linux-gnu- --includedir=/usr/aarch64-linux-gnu/include --with-build-config=bootstrap-lto-lean --enable-link-serialization=2
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) 
+        COLLECT_GCC_OPTIONS='--sysroot=/home/seame/rpi-sysroot' '-mcpu=cortex-a72' '-v' '-o' 'CMakeFiles/cmTC_08c14.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'CMakeFiles/cmTC_08c14.dir/'
+         /usr/libexec/gcc-cross/aarch64-linux-gnu/13/cc1plus -quiet -v -imultiarch aarch64-linux-gnu -isysroot /home/seame/rpi-sysroot -D_GNU_SOURCE /usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_08c14.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mcpu=cortex-a72 -mlittle-endian -mabi=lp64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -o /tmp/ccluUZH1.s
+        GNU C++17 (Ubuntu 13.3.0-6ubuntu2~24.04) version 13.3.0 (aarch64-linux-gnu)
+        	compiled by GNU C version 13.3.0, GMP version 6.3.0, MPFR version 4.2.1, MPC version 1.3.1, isl version isl-0.26-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "/home/seame/rpi-sysroot/usr/local/include/aarch64-linux-gnu"
+        ignoring nonexistent directory "/usr/lib/gcc-cross/aarch64-linux-gnu/13/include-fixed/aarch64-linux-gnu"
+        ignoring nonexistent directory "/usr/lib/gcc-cross/aarch64-linux-gnu/13/include-fixed"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include/c++/13
+         /usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include/c++/13/aarch64-linux-gnu
+         /usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include/c++/13/backward
+         /usr/lib/gcc-cross/aarch64-linux-gnu/13/include
+         /usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include
+         /home/seame/rpi-sysroot/usr/include/aarch64-linux-gnu
+         /home/seame/rpi-sysroot/usr/include
+        End of search list.
+        Compiler executable checksum: 3d8bae0faa467e87e71d0d692ff2e0ca
+        COLLECT_GCC_OPTIONS='--sysroot=/home/seame/rpi-sysroot' '-mcpu=cortex-a72' '-v' '-o' 'CMakeFiles/cmTC_08c14.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'CMakeFiles/cmTC_08c14.dir/'
+         /usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/bin/as -v -EL -march=armv8-a+crc -mabi=lp64 -o CMakeFiles/cmTC_08c14.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccluUZH1.s
+        GNU assembler version 2.42 (aarch64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.42
+        COMPILER_PATH=/usr/libexec/gcc-cross/aarch64-linux-gnu/13/:/usr/libexec/gcc-cross/aarch64-linux-gnu/13/:/usr/libexec/gcc-cross/aarch64-linux-gnu/:/usr/lib/gcc-cross/aarch64-linux-gnu/13/:/usr/lib/gcc-cross/aarch64-linux-gnu/:/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/bin/
+        LIBRARY_PATH=/usr/lib/gcc-cross/aarch64-linux-gnu/13/:/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/../lib/:/home/seame/rpi-sysroot/lib/aarch64-linux-gnu/:/home/seame/rpi-sysroot/lib/../lib/:/home/seame/rpi-sysroot/usr/lib/aarch64-linux-gnu/:/home/seame/rpi-sysroot/usr/lib/../lib/:/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/:/home/seame/rpi-sysroot/lib/:/home/seame/rpi-sysroot/usr/lib/
+        COLLECT_GCC_OPTIONS='--sysroot=/home/seame/rpi-sysroot' '-mcpu=cortex-a72' '-v' '-o' 'CMakeFiles/cmTC_08c14.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'CMakeFiles/cmTC_08c14.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_08c14
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_08c14.dir/link.txt --verbose=1
+        /usr/bin/aarch64-linux-gnu-g++ --sysroot=/home/seame/rpi-sysroot  -mcpu=cortex-a72 -mcpu=cortex-a72   -v CMakeFiles/cmTC_08c14.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_08c14 
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/aarch64-linux-gnu-g++
+        COLLECT_LTO_WRAPPER=/usr/libexec/gcc-cross/aarch64-linux-gnu/13/lto-wrapper
+        Target: aarch64-linux-gnu
+        Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c,ada,c++,go,d,fortran,objc,obj-c++,m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-libquadmath --disable-libquadmath-support --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --without-target-system-zlib --enable-multiarch --enable-fix-cortex-a53-843419 --disable-werror --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=aarch64-linux-gnu --program-prefix=aarch64-linux-gnu- --includedir=/usr/aarch64-linux-gnu/include --with-build-config=bootstrap-lto-lean --enable-link-serialization=2
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) 
+        COMPILER_PATH=/usr/libexec/gcc-cross/aarch64-linux-gnu/13/:/usr/libexec/gcc-cross/aarch64-linux-gnu/13/:/usr/libexec/gcc-cross/aarch64-linux-gnu/:/usr/lib/gcc-cross/aarch64-linux-gnu/13/:/usr/lib/gcc-cross/aarch64-linux-gnu/:/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/bin/
+        LIBRARY_PATH=/usr/lib/gcc-cross/aarch64-linux-gnu/13/:/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/../lib/:/home/seame/rpi-sysroot/lib/aarch64-linux-gnu/:/home/seame/rpi-sysroot/lib/../lib/:/home/seame/rpi-sysroot/usr/lib/aarch64-linux-gnu/:/home/seame/rpi-sysroot/usr/lib/../lib/:/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/:/home/seame/rpi-sysroot/lib/:/home/seame/rpi-sysroot/usr/lib/
+        COLLECT_GCC_OPTIONS='--sysroot=/home/seame/rpi-sysroot' '-mcpu=cortex-a72' '-v' '-o' 'cmTC_08c14' '-shared-libgcc' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'cmTC_08c14.'
+         /usr/libexec/gcc-cross/aarch64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc-cross/aarch64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc-cross/aarch64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccNigBLT.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/home/seame/rpi-sysroot --build-id --eh-frame-hdr --hash-style=gnu --as-needed -dynamic-linker /lib/ld-linux-aarch64.so.1 -X -EL -maarch64linux --fix-cortex-a53-843419 -pie -z now -z relro -o cmTC_08c14 /usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/../lib/Scrt1.o /usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/../lib/crti.o /usr/lib/gcc-cross/aarch64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc-cross/aarch64-linux-gnu/13 -L/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/../lib -L/home/seame/rpi-sysroot/lib/aarch64-linux-gnu -L/home/seame/rpi-sysroot/lib/../lib -L/home/seame/rpi-sysroot/usr/lib/aarch64-linux-gnu -L/home/seame/rpi-sysroot/usr/lib/../lib -L/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib -L/home/seame/rpi-sysroot/lib -L/home/seame/rpi-sysroot/usr/lib CMakeFiles/cmTC_08c14.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc-cross/aarch64-linux-gnu/13/crtendS.o /usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/../lib/crtn.o
+        COLLECT_GCC_OPTIONS='--sysroot=/home/seame/rpi-sysroot' '-mcpu=cortex-a72' '-v' '-o' 'cmTC_08c14' '-shared-libgcc' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'cmTC_08c14.'
+        gmake[1]: Leaving directory '/home/seame/Desktop/SEAME projects/Instrument-Cluster/Instrument-Cluster/GUI/CLuster_0827/build-rpi/CMakeFiles/CMakeScratch/TryCompile-7UHGiW'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
+      - "/usr/share/cmake-3.28/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include/c++/13]
+          add: [/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include/c++/13/aarch64-linux-gnu]
+          add: [/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include/c++/13/backward]
+          add: [/usr/lib/gcc-cross/aarch64-linux-gnu/13/include]
+          add: [/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include]
+          add: [/home/seame/rpi-sysroot/usr/include/aarch64-linux-gnu]
+          add: [/home/seame/rpi-sysroot/usr/include]
+        end of search list found
+        collapse include dir [/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include/c++/13] ==> [/usr/aarch64-linux-gnu/include/c++/13]
+        collapse include dir [/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include/c++/13/aarch64-linux-gnu] ==> [/usr/aarch64-linux-gnu/include/c++/13/aarch64-linux-gnu]
+        collapse include dir [/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include/c++/13/backward] ==> [/usr/aarch64-linux-gnu/include/c++/13/backward]
+        collapse include dir [/usr/lib/gcc-cross/aarch64-linux-gnu/13/include] ==> [/usr/lib/gcc-cross/aarch64-linux-gnu/13/include]
+        collapse include dir [/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include] ==> [/usr/aarch64-linux-gnu/include]
+        collapse include dir [/home/seame/rpi-sysroot/usr/include/aarch64-linux-gnu] ==> [/home/seame/rpi-sysroot/usr/include/aarch64-linux-gnu]
+        collapse include dir [/home/seame/rpi-sysroot/usr/include] ==> [/home/seame/rpi-sysroot/usr/include]
+        implicit include dirs: [/usr/aarch64-linux-gnu/include/c++/13;/usr/aarch64-linux-gnu/include/c++/13/aarch64-linux-gnu;/usr/aarch64-linux-gnu/include/c++/13/backward;/usr/lib/gcc-cross/aarch64-linux-gnu/13/include;/usr/aarch64-linux-gnu/include;/home/seame/rpi-sysroot/usr/include/aarch64-linux-gnu;/home/seame/rpi-sysroot/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:159 (message)"
+      - "/usr/share/cmake-3.28/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(aarch64-linux-gnu-ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: '/home/seame/Desktop/SEAME projects/Instrument-Cluster/Instrument-Cluster/GUI/CLuster_0827/build-rpi/CMakeFiles/CMakeScratch/TryCompile-7UHGiW']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_08c14/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_08c14.dir/build.make CMakeFiles/cmTC_08c14.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/seame/Desktop/SEAME projects/Instrument-Cluster/Instrument-Cluster/GUI/CLuster_0827/build-rpi/CMakeFiles/CMakeScratch/TryCompile-7UHGiW']
+        ignore line: [Building CXX object CMakeFiles/cmTC_08c14.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/usr/bin/aarch64-linux-gnu-g++ --sysroot=/home/seame/rpi-sysroot   -mcpu=cortex-a72 -mcpu=cortex-a72    -v -o CMakeFiles/cmTC_08c14.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/aarch64-linux-gnu-g++]
+        ignore line: [Target: aarch64-linux-gnu]
+        ignore line: [Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c ada c++ go d fortran objc obj-c++ m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-libquadmath --disable-libquadmath-support --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --without-target-system-zlib --enable-multiarch --enable-fix-cortex-a53-843419 --disable-werror --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=aarch64-linux-gnu --program-prefix=aarch64-linux-gnu- --includedir=/usr/aarch64-linux-gnu/include --with-build-config=bootstrap-lto-lean --enable-link-serialization=2]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) ]
+        ignore line: [COLLECT_GCC_OPTIONS='--sysroot=/home/seame/rpi-sysroot' '-mcpu=cortex-a72' '-v' '-o' 'CMakeFiles/cmTC_08c14.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'CMakeFiles/cmTC_08c14.dir/']
+        ignore line: [ /usr/libexec/gcc-cross/aarch64-linux-gnu/13/cc1plus -quiet -v -imultiarch aarch64-linux-gnu -isysroot /home/seame/rpi-sysroot -D_GNU_SOURCE /usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_08c14.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mcpu=cortex-a72 -mlittle-endian -mabi=lp64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -o /tmp/ccluUZH1.s]
+        ignore line: [GNU C++17 (Ubuntu 13.3.0-6ubuntu2~24.04) version 13.3.0 (aarch64-linux-gnu)]
+        ignore line: [	compiled by GNU C version 13.3.0  GMP version 6.3.0  MPFR version 4.2.1  MPC version 1.3.1  isl version isl-0.26-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring nonexistent directory "/home/seame/rpi-sysroot/usr/local/include/aarch64-linux-gnu"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc-cross/aarch64-linux-gnu/13/include-fixed/aarch64-linux-gnu"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc-cross/aarch64-linux-gnu/13/include-fixed"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include/c++/13]
+        ignore line: [ /usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include/c++/13/aarch64-linux-gnu]
+        ignore line: [ /usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include/c++/13/backward]
+        ignore line: [ /usr/lib/gcc-cross/aarch64-linux-gnu/13/include]
+        ignore line: [ /usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include]
+        ignore line: [ /home/seame/rpi-sysroot/usr/include/aarch64-linux-gnu]
+        ignore line: [ /home/seame/rpi-sysroot/usr/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: 3d8bae0faa467e87e71d0d692ff2e0ca]
+        ignore line: [COLLECT_GCC_OPTIONS='--sysroot=/home/seame/rpi-sysroot' '-mcpu=cortex-a72' '-v' '-o' 'CMakeFiles/cmTC_08c14.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'CMakeFiles/cmTC_08c14.dir/']
+        ignore line: [ /usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/bin/as -v -EL -march=armv8-a+crc -mabi=lp64 -o CMakeFiles/cmTC_08c14.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccluUZH1.s]
+        ignore line: [GNU assembler version 2.42 (aarch64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.42]
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc-cross/aarch64-linux-gnu/13/:/usr/libexec/gcc-cross/aarch64-linux-gnu/13/:/usr/libexec/gcc-cross/aarch64-linux-gnu/:/usr/lib/gcc-cross/aarch64-linux-gnu/13/:/usr/lib/gcc-cross/aarch64-linux-gnu/:/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/bin/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc-cross/aarch64-linux-gnu/13/:/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/../lib/:/home/seame/rpi-sysroot/lib/aarch64-linux-gnu/:/home/seame/rpi-sysroot/lib/../lib/:/home/seame/rpi-sysroot/usr/lib/aarch64-linux-gnu/:/home/seame/rpi-sysroot/usr/lib/../lib/:/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/:/home/seame/rpi-sysroot/lib/:/home/seame/rpi-sysroot/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='--sysroot=/home/seame/rpi-sysroot' '-mcpu=cortex-a72' '-v' '-o' 'CMakeFiles/cmTC_08c14.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'CMakeFiles/cmTC_08c14.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_08c14]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_08c14.dir/link.txt --verbose=1]
+        ignore line: [/usr/bin/aarch64-linux-gnu-g++ --sysroot=/home/seame/rpi-sysroot  -mcpu=cortex-a72 -mcpu=cortex-a72   -v CMakeFiles/cmTC_08c14.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_08c14 ]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/aarch64-linux-gnu-g++]
+        ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc-cross/aarch64-linux-gnu/13/lto-wrapper]
+        ignore line: [Target: aarch64-linux-gnu]
+        ignore line: [Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c ada c++ go d fortran objc obj-c++ m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-libquadmath --disable-libquadmath-support --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --without-target-system-zlib --enable-multiarch --enable-fix-cortex-a53-843419 --disable-werror --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=aarch64-linux-gnu --program-prefix=aarch64-linux-gnu- --includedir=/usr/aarch64-linux-gnu/include --with-build-config=bootstrap-lto-lean --enable-link-serialization=2]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) ]
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc-cross/aarch64-linux-gnu/13/:/usr/libexec/gcc-cross/aarch64-linux-gnu/13/:/usr/libexec/gcc-cross/aarch64-linux-gnu/:/usr/lib/gcc-cross/aarch64-linux-gnu/13/:/usr/lib/gcc-cross/aarch64-linux-gnu/:/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/bin/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc-cross/aarch64-linux-gnu/13/:/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/../lib/:/home/seame/rpi-sysroot/lib/aarch64-linux-gnu/:/home/seame/rpi-sysroot/lib/../lib/:/home/seame/rpi-sysroot/usr/lib/aarch64-linux-gnu/:/home/seame/rpi-sysroot/usr/lib/../lib/:/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/:/home/seame/rpi-sysroot/lib/:/home/seame/rpi-sysroot/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='--sysroot=/home/seame/rpi-sysroot' '-mcpu=cortex-a72' '-v' '-o' 'cmTC_08c14' '-shared-libgcc' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'cmTC_08c14.']
+        link line: [ /usr/libexec/gcc-cross/aarch64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc-cross/aarch64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc-cross/aarch64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccNigBLT.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/home/seame/rpi-sysroot --build-id --eh-frame-hdr --hash-style=gnu --as-needed -dynamic-linker /lib/ld-linux-aarch64.so.1 -X -EL -maarch64linux --fix-cortex-a53-843419 -pie -z now -z relro -o cmTC_08c14 /usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/../lib/Scrt1.o /usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/../lib/crti.o /usr/lib/gcc-cross/aarch64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc-cross/aarch64-linux-gnu/13 -L/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/../lib -L/home/seame/rpi-sysroot/lib/aarch64-linux-gnu -L/home/seame/rpi-sysroot/lib/../lib -L/home/seame/rpi-sysroot/usr/lib/aarch64-linux-gnu -L/home/seame/rpi-sysroot/usr/lib/../lib -L/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib -L/home/seame/rpi-sysroot/lib -L/home/seame/rpi-sysroot/usr/lib CMakeFiles/cmTC_08c14.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc-cross/aarch64-linux-gnu/13/crtendS.o /usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/../lib/crtn.o]
+          arg [/usr/libexec/gcc-cross/aarch64-linux-gnu/13/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/usr/libexec/gcc-cross/aarch64-linux-gnu/13/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/usr/libexec/gcc-cross/aarch64-linux-gnu/13/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccNigBLT.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [--sysroot=/home/seame/rpi-sysroot] ==> ignore
+          arg [--build-id] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib/ld-linux-aarch64.so.1] ==> ignore
+          arg [-X] ==> ignore
+          arg [-EL] ==> ignore
+          arg [-maarch64linux] ==> ignore
+          arg [--fix-cortex-a53-843419] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-znow] ==> ignore
+          arg [-zrelro] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_08c14] ==> ignore
+          arg [/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/../lib/Scrt1.o] ==> obj [/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/../lib/Scrt1.o]
+          arg [/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/../lib/crti.o] ==> obj [/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/../lib/crti.o]
+          arg [/usr/lib/gcc-cross/aarch64-linux-gnu/13/crtbeginS.o] ==> obj [/usr/lib/gcc-cross/aarch64-linux-gnu/13/crtbeginS.o]
+          arg [-L/usr/lib/gcc-cross/aarch64-linux-gnu/13] ==> dir [/usr/lib/gcc-cross/aarch64-linux-gnu/13]
+          arg [-L/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/../lib] ==> dir [/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/../lib]
+          arg [-L/home/seame/rpi-sysroot/lib/aarch64-linux-gnu] ==> dir [/home/seame/rpi-sysroot/lib/aarch64-linux-gnu]
+          arg [-L/home/seame/rpi-sysroot/lib/../lib] ==> dir [/home/seame/rpi-sysroot/lib/../lib]
+          arg [-L/home/seame/rpi-sysroot/usr/lib/aarch64-linux-gnu] ==> dir [/home/seame/rpi-sysroot/usr/lib/aarch64-linux-gnu]
+          arg [-L/home/seame/rpi-sysroot/usr/lib/../lib] ==> dir [/home/seame/rpi-sysroot/usr/lib/../lib]
+          arg [-L/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib] ==> dir [/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib]
+          arg [-L/home/seame/rpi-sysroot/lib] ==> dir [/home/seame/rpi-sysroot/lib]
+          arg [-L/home/seame/rpi-sysroot/usr/lib] ==> dir [/home/seame/rpi-sysroot/usr/lib]
+          arg [CMakeFiles/cmTC_08c14.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [-lstdc++] ==> lib [stdc++]
+          arg [-lm] ==> lib [m]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lc] ==> lib [c]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [/usr/lib/gcc-cross/aarch64-linux-gnu/13/crtendS.o] ==> obj [/usr/lib/gcc-cross/aarch64-linux-gnu/13/crtendS.o]
+          arg [/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/../lib/crtn.o] ==> obj [/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/../lib/crtn.o]
+        collapse obj [/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/../lib/Scrt1.o] ==> [/usr/aarch64-linux-gnu/lib/Scrt1.o]
+        collapse obj [/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/../lib/crti.o] ==> [/usr/aarch64-linux-gnu/lib/crti.o]
+        collapse obj [/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/../lib/crtn.o] ==> [/usr/aarch64-linux-gnu/lib/crtn.o]
+        collapse library dir [/usr/lib/gcc-cross/aarch64-linux-gnu/13] ==> [/usr/lib/gcc-cross/aarch64-linux-gnu/13]
+        collapse library dir [/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib/../lib] ==> [/usr/aarch64-linux-gnu/lib]
+        collapse library dir [/home/seame/rpi-sysroot/lib/aarch64-linux-gnu] ==> [/home/seame/rpi-sysroot/lib/aarch64-linux-gnu]
+        collapse library dir [/home/seame/rpi-sysroot/lib/../lib] ==> [/home/seame/rpi-sysroot/lib]
+        collapse library dir [/home/seame/rpi-sysroot/usr/lib/aarch64-linux-gnu] ==> [/home/seame/rpi-sysroot/usr/lib/aarch64-linux-gnu]
+        collapse library dir [/home/seame/rpi-sysroot/usr/lib/../lib] ==> [/home/seame/rpi-sysroot/usr/lib]
+        collapse library dir [/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/lib] ==> [/usr/aarch64-linux-gnu/lib]
+        collapse library dir [/home/seame/rpi-sysroot/lib] ==> [/home/seame/rpi-sysroot/lib]
+        collapse library dir [/home/seame/rpi-sysroot/usr/lib] ==> [/home/seame/rpi-sysroot/usr/lib]
+        implicit libs: [stdc++;m;gcc_s;gcc;c;gcc_s;gcc]
+        implicit objs: [/usr/aarch64-linux-gnu/lib/Scrt1.o;/usr/aarch64-linux-gnu/lib/crti.o;/usr/lib/gcc-cross/aarch64-linux-gnu/13/crtbeginS.o;/usr/lib/gcc-cross/aarch64-linux-gnu/13/crtendS.o;/usr/aarch64-linux-gnu/lib/crtn.o]
+        implicit dirs: [/usr/lib/gcc-cross/aarch64-linux-gnu/13;/usr/aarch64-linux-gnu/lib;/home/seame/rpi-sysroot/lib/aarch64-linux-gnu;/home/seame/rpi-sysroot/lib;/home/seame/rpi-sysroot/usr/lib/aarch64-linux-gnu;/home/seame/rpi-sysroot/usr/lib]
+        implicit fwks: []
+      
+      
+...

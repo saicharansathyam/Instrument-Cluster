@@ -1,0 +1,7 @@
+/home/seame/Desktop/SEAME projects/Instrument-Cluster/Instrument-Cluster/GUI/CLuster_0827/build-rpi/CMakeFiles/ClusterUI_0820.dir
+/home/seame/Desktop/SEAME projects/Instrument-Cluster/Instrument-Cluster/GUI/CLuster_0827/build-rpi/CMakeFiles/edit_cache.dir
+/home/seame/Desktop/SEAME projects/Instrument-Cluster/Instrument-Cluster/GUI/CLuster_0827/build-rpi/CMakeFiles/rebuild_cache.dir
+/home/seame/Desktop/SEAME projects/Instrument-Cluster/Instrument-Cluster/GUI/CLuster_0827/build-rpi/CMakeFiles/list_install_components.dir
+/home/seame/Desktop/SEAME projects/Instrument-Cluster/Instrument-Cluster/GUI/CLuster_0827/build-rpi/CMakeFiles/install.dir
+/home/seame/Desktop/SEAME projects/Instrument-Cluster/Instrument-Cluster/GUI/CLuster_0827/build-rpi/CMakeFiles/install/local.dir
+/home/seame/Desktop/SEAME projects/Instrument-Cluster/Instrument-Cluster/GUI/CLuster_0827/build-rpi/CMakeFiles/install/strip.dir
