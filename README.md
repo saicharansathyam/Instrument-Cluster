@@ -1,6 +1,13 @@
+
+
+
+
 # PiRacer Instrument Cluster
 
 A modern, real-time instrument cluster GUI for PiRacer vehicles, featuring speed monitoring, battery level display, gear indication, and turn signals. Built with Qt5/QML and designed for cross-compilation to Raspberry Pi 4.
+
+<img width="1295" height="391" alt="image" src="https://github.com/user-attachments/assets/a46b0894-b17d-47af-8b10-45901a56ece3" />
+
 
 ## System Overview
 
