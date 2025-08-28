@@ -1,4 +1,0 @@
-/home/team3/Desktop/Instrument-Cluster/GUI/ClusterUI_0820/build/CMakeFiles/ClusterUI_0820.dir
-/home/team3/Desktop/Instrument-Cluster/GUI/ClusterUI_0820/build/CMakeFiles/edit_cache.dir
-/home/team3/Desktop/Instrument-Cluster/GUI/ClusterUI_0820/build/CMakeFiles/rebuild_cache.dir
-/home/team3/Desktop/Instrument-Cluster/GUI/ClusterUI_0820/build/CMakeFiles/ClusterUI_0820_autogen.dir
