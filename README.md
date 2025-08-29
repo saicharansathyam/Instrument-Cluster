@@ -326,7 +326,6 @@ ip link set can0 up type can bitrate 500000
   - Right: Neutral (N)
 - **Left Bumper**: Left turn signal toggle
 - **Right Bumper**: Right turn signal toggle
-- **Both Bumpers**: Hazard lights
 
 ## Technical Details
 
