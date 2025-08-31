@@ -127,7 +127,7 @@ flowchart TD
     style L fill:#ffeb3b,color:#000
 ```
 
-### 4. RC Controller (Optional)
+### 4. RC Controller
 
 ```mermaid
 flowchart TD
