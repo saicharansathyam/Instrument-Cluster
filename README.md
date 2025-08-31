@@ -8,8 +8,6 @@ A real-time instrument cluster GUI for PiRacer vehicles, featuring speed monitor
 
 <img width="1266" height="373" alt="image" src="https://github.com/user-attachments/assets/6353765a-9caf-4321-bdb2-1993a91ebde2" />
 
-
-
 ## System Overview
 
 ```mermaid
@@ -32,8 +30,8 @@ graph LR
 ## Features
 
 - **Real-time Speed Display**: Speed monitoring in cm/s with Kalman filtering for smooth readings
-- **Battery Level Indicator**: Visual battery percentage with color-coded status
-- **Gear Display**: Shows current gear (P/R/N/D) with dynamic animations  
+- **Battery Voltage Display**: Shows actual battery voltage with color-coded visual indicator
+- **Gear Display**: Shows current gear (P/R/N/D) in bright orange without blinking
 - **Turn Signal Indicators**: Left/right turn signals and hazard lights with blinking animations
 - **Calibration Overlay**: Press F1 for debug information and speed calibration visualization
 - **Cross-Platform**: Runs on development machine and cross-compiles for Raspberry Pi 4
@@ -71,14 +69,17 @@ flowchart TD
     subgraph "CAN Thread"
         E[Listen for CAN Messages] --> F{Message Type?}
         F -->|0x100| G[Apply Kalman Filter to Speed]
-        F -->|0x102| H[Process Gear Data]
         G --> I[Emit SpeedChanged Signal]
-        H --> J[Emit GearChanged Signal]
     end
     
     subgraph "Battery Thread"
         K[Read INA219 Every 1s] --> L[Emit BatteryChanged Signal]
         L --> K
+    end
+    
+    subgraph "D-Bus Methods"
+        M[SetGear Method Called] --> N[Emit GearChanged Signal]
+        O[SetTurnSignal Method Called] --> P[Emit TurnSignalChanged Signal]
     end
     
     C --> E
@@ -88,8 +89,9 @@ flowchart TD
     style C fill:#81c784,color:#000
     style D fill:#81c784,color:#000
     style I fill:#e1f5fe,color:#000
-    style J fill:#e1f5fe,color:#000
     style L fill:#fff9c4,color:#000
+    style N fill:#ff8c00,color:#000
+    style P fill:#ab47bc,color:#fff
 ```
 
 ### 3. Qt5/QML Instrument Cluster
@@ -104,20 +106,25 @@ flowchart TD
     E --> F[Update Speed Gauge Animation]
     
     D --> G[Listen for Battery Updates]
-    G --> H[Update Battery Level & Color]
+    G --> H[Update Battery Voltage Display]
     
-    D --> I[Listen for Turn Signal Updates]
-    I --> J[Animate Turn Indicators]
+    D --> I[Listen for Gear Updates]
+    I --> J[Update Gear Display]
     
-    F --> K[Render Frame]
-    H --> K
-    J --> K
-    K --> E
+    D --> K[Listen for Turn Signal Updates]
+    K --> L[Animate Turn Indicators]
+    
+    F --> M[Render Frame]
+    H --> M
+    J --> M
+    L --> M
+    M --> E
     
     style A fill:#45b7d1,color:#000
     style F fill:#66bb6a,color:#000
     style H fill:#ab47bc,color:#fff
-    style J fill:#ffeb3b,color:#000
+    style J fill:#ff8c00,color:#000
+    style L fill:#ffeb3b,color:#000
 ```
 
 ### 4. RC Controller (Optional)
@@ -132,16 +139,21 @@ flowchart TD
     E --> F[Apply Gear-based Logic]
     F --> G[Set Steering & Throttle]
     
-    D --> H[Read Turn Signal Buttons]
-    H --> I[Send Turn Signal Commands]
+    D --> H[Read D-Pad Input]
+    H --> I[Send Gear Commands]
     
-    G --> J[Control Loop Delay]
-    I --> J
-    J --> D
+    D --> J[Read Turn Signal Buttons]
+    J --> K[Send Turn Signal Commands]
+    
+    G --> L[Control Loop Delay]
+    I --> L
+    K --> L
+    L --> D
     
     style A fill:#45b7d1,color:#000
     style G fill:#66bb6a,color:#000
-    style I fill:#ab47bc,color:#fff
+    style I fill:#ff8c00,color:#000
+    style K fill:#ab47bc,color:#fff
     style E fill:#ffeb3b,color:#000
     style F fill:#ffc107,color:#000
 ```
@@ -163,14 +175,17 @@ sequenceDiagram
     D->>D: Apply Kalman Filter
     
     D->>G: SpeedChanged Signal
-    D->>R: Speed Update
     
     Note over D: Every 1 second
-    D->>D: Read Battery (INA219)
+    D->>D: Read Battery Voltage (INA219)
     D->>G: BatteryChanged Signal
     
-    Note over R: Gamepad input
-    R->>D: SetTurnSignal()
+    Note over R: Gamepad D-pad input
+    R->>D: SetGear(string)
+    D->>G: GearChanged Signal
+    
+    Note over R: Gamepad bumper input
+    R->>D: SetTurnSignal(string)
     D->>G: TurnSignalChanged Signal
     
     G->>G: Update UI Animations
@@ -182,15 +197,13 @@ sequenceDiagram
 graph TD
     subgraph "CAN Message Structure"
         A[CAN ID: 0x100<br/>Speed Data] --> B[Byte 0: Speed High<br/>Byte 1: Speed Low<br/>Big-endian 16-bit cm/s]
-        
-        C[CAN ID: 0x102<br/>Gear Data] --> D[Byte 0: ASCII Gear<br/>P/R/N/D character]
     end
     
     style A fill:#ff9800,color:#000
-    style C fill:#2196f3,color:#fff
     style B fill:#fff3e0,color:#000
-    style D fill:#e3f2fd,color:#000
 ```
+
+**Note**: Arduino only transmits speed data. Gear control is handled via gamepad input through the RC Controller.
 
 ## Hardware Requirements
 
@@ -291,6 +304,34 @@ Make permanent by adding to `/etc/rc.local`:
 ```bash
 ip link set can0 up type can bitrate 500000
 ```
+
+### Auto-start Services
+Create systemd service files:
+
+`/etc/systemd/system/dashboard.service`:
+```ini
+[Unit]
+Description=PiRacer Dashboard Service
+After=network.target can0.service
+
+[Service]
+Type=simple
+User=team3
+WorkingDirectory=/home/team3
+ExecStart=/usr/bin/python3 /home/team3/complete_dashboard_service.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Enable services:
+```bash
+sudo systemctl enable dashboard.service
+sudo systemctl start dashboard.service
+```
+
 ## Usage
 
 ### Running the System
@@ -313,7 +354,7 @@ ip link set can0 up type can bitrate 500000
 ### Controls
 
 #### Keyboard Shortcuts
-- **F1**: Toggle calibration overlay (shows raw vs filtered speed, needle angle visualization)
+- **F1**: Toggle calibration overlay (shows raw vs filtered speed, battery voltage, needle angle visualization)
 - **F2**: Toggle turn signal indicators visibility
 
 #### Gamepad Controls (RC Mode)
@@ -326,6 +367,7 @@ ip link set can0 up type can bitrate 500000
   - Right: Neutral (N)
 - **Left Bumper**: Left turn signal toggle
 - **Right Bumper**: Right turn signal toggle
+- **Both Bumpers**: Hazard lights
 
 ## Technical Details
 
@@ -339,13 +381,18 @@ ip link set can0 up type can bitrate 500000
 ### Battery Monitoring
 - INA219 sensor on I2C address 0x41
 - 3S Li-ion chemistry (9.0V - 12.6V range)
+- Returns raw voltage instead of percentage
 - 1Hz polling rate with D-Bus signal emission
+- Visual indicator uses voltage-to-percentage conversion for fill level
 
 ### Communication Protocols
 
 #### CAN Messages
-- **0x100**: Speed data (16-bit big-endian, cm/s)
-- **0x102**: Gear data (8-bit ASCII: P/R/N/D)
+- **0x100**: Speed data (16-bit big-endian, cm/s) - **Only message transmitted by Arduino**
+
+#### D-Bus Control Interface
+- **Gear Control**: SetGear() method called by RC Controller (gamepad D-pad input)
+- **Turn Signals**: SetTurnSignal() method called by RC Controller (gamepad bumper input)
 
 #### D-Bus Interface
 ```
@@ -354,7 +401,7 @@ Object: /com/piracer/dashboard
 
 Methods:
 - GetSpeed() → double (cm/s)
-- GetBatteryLevel() → double (0-100%)
+- GetBatteryLevel() → double (voltage in V)
 - GetGear() → string (P/R/N/D)
 - SetGear(string) → void
 - SetTurnSignal(string) → void (off/left/right/hazard)
@@ -362,7 +409,7 @@ Methods:
 
 Signals:
 - SpeedChanged(double)
-- BatteryChanged(double)
+- BatteryChanged(double) - now sends voltage
 - GearChanged(string)
 - TurnSignalChanged(string)
 ```
@@ -476,6 +523,11 @@ journalctl -f -u dashboard.service
    - Verify Kalman filter isn't over-smoothing
    - Test with `--debug` flag to see raw vs filtered values
 
+5. **"Gear not updating from gamepad"**
+   - Verify gamepad D-pad input in RC controller
+   - Check D-Bus SetGear method calls: `dbus-monitor --session`
+   - Ensure RC controller service is running
+
 ## Development
 
 ### File Structure
@@ -499,6 +551,7 @@ journalctl -f -u dashboard.service
 - **Manual MOC/RCC**: Explicit Qt tool invocation for cross-compilation compatibility
 - **Throttle Safety**: 60% maximum throttle limit in RC controller
 - **CAN Auto-Detection**: Prefers can0 over can1, supports environment override
+- **Voltage Display**: Shows actual battery voltage instead of percentage for better accuracy
 
 ### Contributing
 
@@ -531,9 +584,26 @@ perf record ./ClusterUI_0820
 3. **Cross-compile**: Run `./build-rpi.sh` and deploy binary
 4. **Launch**: Start dashboard service, then Qt GUI
 
+## License
+
+[Add your license information here]
+
+## Support
+
+For issues and questions:
+- Check troubleshooting section above
+- Review system logs: `journalctl -f -u dashboard.service`
+- Monitor CAN traffic: `candump can0`
+- Test D-Bus connectivity: `dbus-monitor --session`
+- Enable debug mode: `python3 complete_dashboard_service.py --debug`
+
+## Acknowledgments
+
 Built using:
 - Qt5 framework for cross-platform GUI
 - D-Bus for inter-process communication
 - SocketCAN for automotive-grade networking
 - Kalman filtering for robust signal processing
 - CMake with pkg-config for reliable cross-compilation
+
+
